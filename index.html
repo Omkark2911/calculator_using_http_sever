@@ -1,0 +1,40 @@
+<html>
+
+<head>
+    <script>
+        async function calculate(type) {
+            const a = parseInt(document.getElementById("first").value);
+            const b = parseInt(document.getElementById("second").value);
+
+            if (isNaN(a) || isNaN(b)) {
+                alert("Enter valid numbers");
+                return;
+            }
+            try {
+                const res = await fetch(`http://localhost:3003/${type}/${a}/${b}`);
+                const json = await res.json()
+
+                document.getElementById("response").innerHTML = json.ans;
+            } 
+            catch (err) {
+                console.error(err);
+                alert("Error occurred");
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <input id="first" type="text" placeholder="first number" />
+    <input id="second" type="text" placeholder="second number" />
+
+    <button onclick="calculate('add')">add</button>
+    <button onclick="calculate('sub')">sub</button>
+    <button onclick="calculate('multiply')">multiply</button>
+    <button onclick="calculate('division')">division</button>
+
+
+    <div id="response"></div>
+</body>
+
+</html>
